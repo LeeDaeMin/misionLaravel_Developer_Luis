@@ -41,7 +41,7 @@ Route::group([
         'middleware' => ['auth:api', 'role:Admin']
     ], function () {
 
-        Route::post('/add', [PeliculasController::class, 'add']);
+        Route::post('/', [PeliculasController::class, 'create']);
         Route::put('/{id}', [PeliculasController::class, 'update']);
         Route::delete('/{id}', [PeliculasController::class, 'destroy']);
     });

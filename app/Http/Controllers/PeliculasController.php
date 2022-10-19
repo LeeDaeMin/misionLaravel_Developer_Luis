@@ -115,31 +115,33 @@ class PeliculasController extends Controller
 
     //only admin can create a new movie
 
-    public function add(Request $datos)
-    {
+    function create(Request $peliculas){
         try {
-  
-            $datos->validate([
-                'titulo' => 'required|string',
-                'genero' => 'required|string',
-                'director' => 'required|string',
-                'año' => 'required|string',
-                'sinopsis' => ' required|string'
-            ]); 
-
-            $peliculas = Peliculas::create([
-                'titulo' => $datos->titulo,
-                'genero' => $datos->genero,
-                'director' => $datos->director,
-                'año' => $datos->año,
-                'sinopsis' => $datos->sinopsis,
+            $peliculas->validate([
+                'titulo'=>'required|string',
+                'genero'=>'required|string',
+                'director'=>'required|string',
+                'año'=>'required|string',
+                'sinopsis'=>'required|string'
             ]);
-        } catch (\Exception $e) {
-            return response()->json(['나쁘다' => $e->getMessage()], 500);
-        }
-        return response()->json([
-            '오케이' => 'Successfully created user!'
-        ], 201);
+
+            $peliculas=Peliculas::create([
+                'titulo'=> $peliculas->titulo,
+                'genero'=> $peliculas->genero,
+                'director'=> $peliculas->director,
+                'año'=> $peliculas->año,
+                'sinopsis'=> $peliculas->sinopsis
+            ]);
+            return response()->json([
+                'message'=>'Successfully created user!',
+                'peliculas'=>$peliculas
+            ]);
+        } catch (\Exception $th) {
+            return response()->json([
+                'message'=>'Error created user!',
+                'error'=>$th->getMessage()
+            ]);
     }
+}
 
 }
